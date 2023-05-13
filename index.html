@@ -153,10 +153,10 @@
                 if (!herhangibirkarevuruldumu){ // Tıklanan bölge kare değil de boşluksa
                     can--;
                     canHTML.innerHTML = can;
-                    if(can < 0){ // Can bittiyse
+                    if(can <= 0){ // Can bittiyse
+                        window.alert("Canınız bitti, yandınız !!!");
                         skor = 0;
                         can = 3;
-                        window.alert("Canınız bitti, yandınız !!!");
                         skorHTML.innerHTML = skor;
                         canHTML.innerHTML = can;
                         kareler.splice(0,kareler.length); // Geri kalan tum kareleri sil
