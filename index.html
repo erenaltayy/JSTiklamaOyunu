@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        #oyunAlani{
+            border: 1px solid black;   
+        }
+        .kare{
+           z-index: 1; 
+        }
+        #oyunBaslatButon{
+            padding: 10px;
+            border-radius: 15px;
+            background-color:red;
+            color: white;
+            font-size: 30px;
+            margin: 10px;
+        }
+        .skor_can{
+            padding: 10px;
+            font-size: 30px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="oyunAlani" width="800" height="480"></canvas><br>
+    <div class="skor_can">Skor: <span id="skor">0</span></div> 
+    <div class="skor_can">Can Sayısı: <span id="can">3</span></div>
+    <button id="oyunBaslatButon">Oyunu Başlat</button><br>
+
+    <script>
+        const canvas = document.getElementById("oyunAlani");
+        const ctx = canvas.getContext("2d");
+        const renkler = ["aqua", "aquamarine", "black", "brown", 
+        "burlywood", "coral", "crimson", "cornflowerblue", "darkblue",
+        "darkgreen", "darkkhaki", "darksalmon", "lightpink" ];
+        const kareler = []; 
+        let skor = 0;
+        let can = 3;
+        let oyunBaslatildiMi = false; 
+        canvas.addEventListener("click", tiklama);
+        function tiklama(event){
+                fareX = event.clientX - canvas.offsetLeft;
+                fareY = event.clientY - canvas.offsetTop;
+                tiklandi = true;
+        };
+        const oyunBaslatButon = document.getElementById("oyunBaslatButon");
+        oyunBaslatButon.addEventListener("click", oyunBaslat);
+       
+
+        const canHTML = document.getElementById("can");
+        const skorHTML = document.getElementById("skor");
+        
+        let fareX = 0;
+        let fareY = 0;
+        let tiklandi = false;
+
+        ciz(); 
+
+        class Kare{
+            constructor(x, y, buyukluk, hiz){
+                this.x = x;
+                this.y = y;
+                this.buyukluk = buyukluk;
+                this.hiz = hiz;
+                this.renk = this.renkBelirle();
+                this.yon = {
+                    x: xYonBelirle(),
+                    y: yYonBelirle(),
+                };
+            };
+            kareCiz(){
+                ctx.fillStyle = this.renk;
+                ctx.fillRect(this.x, this.y, this.buyukluk, this.buyukluk);
+            };
+            hareketEttir(){
+                this.x += this.hiz * this.yon.x;
+                this.y += this.hiz * this.yon.y;
+                // canvasın köşelerine çarpıldıysa
+                if (this.x <= 0 || this.x + this.buyukluk >= canvas.width) {
+                    this.yon.x = -this.yon.x;
+                };
+                if (this.y <= 0 || this.y + this.buyukluk >= canvas.height) {
+                    this.yon.y = -this.yon.y;
+                };
+            };  
+            renkBelirle(){
+                const temp = Math.floor(Math.random() * renkler.length); 
+                return  renkler[temp];
+            };
+        };
+        function xYonBelirle(){
+            let temp = Math.random();
+            if(temp< 0.5){
+                return 1;
+            }
+            else{
+                return -1;
+            };
+        };
+        function yYonBelirle(){
+            let temp = Math.random();
+            if(temp < 0.5){
+                return 1;
+            }
+            else{
+                return -1;
+            };
+        };
+        // Tıklanan karenin indisini bulur ve kareler dizisinden siler
+        function  elemanCikar(kare){
+            var index = kareler.indexOf(kare);
+            kareler.splice(index, 1);
+        };
+        //10 tane kare oluşturur ve bunları kareler dizisine ekler
+        function kareleriOlustur(){
+            for(let i=0; i<10; i++){
+                const buyukluk = Math.floor(Math.random() * 50) + 45;
+                const x = Math.random() * (canvas.width - buyukluk);
+                const y = Math.random() * (canvas.height - buyukluk);
+                const hiz = Math.floor(Math.random() * 3) + 1; 
+                kareler.push(new Kare(x, y, buyukluk, hiz));
+            };
+        };
+        //kareler dizisindeki her bir kareyi ekranana çizer
+        function ciz(){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = "black"; // son tiklanan yer
+            ctx.fillRect(fareX-2, fareY-2, 5, 5);
+
+            if(tiklandi){
+                var herhangibirkarevuruldumu = false
+
+                for(let i = 0; i < kareler.length; i++){
+                    var kare = kareler[i];
+                    // Kareye tıklandıysa
+                    if(fareX > kare.x && fareX < kare.x + kare.buyukluk && fareY > kare.y && fareY < kare.y + kare.buyukluk){
+                        skor++;
+                        skorHTML.innerHTML = skor;
+                        elemanCikar(kare);
+                        herhangibirkarevuruldumu = true 
+                    }; 
+                }; 
+                if (!herhangibirkarevuruldumu){ // Tıklanan bölge kare değil de boşluksa
+                    can--;
+                    canHTML.innerHTML = can;
+                    if(can < 0){ // Can bittiyse
+                        skor = 0;
+                        can = 3;
+                        window.alert("Canınız bitti, yandınız !!!");
+                        skorHTML.innerHTML = skor;
+                        canHTML.innerHTML = can;
+                        kareler.splice(0,kareler.length); // Geri kalan tum kareleri sil
+                        oyunBaslatildiMi = false;
+                    };
+                };
+                if(skor === 10){ //Bütün karelere tıklandıysa
+                    window.alert("Tebrikler oyunu tamamladınız !!!");
+                    skor = 0;
+                    can = 3;
+                    skorHTML.innerHTML = skor;
+                    canHTML.innerHTML = can;
+                    oyunBaslatildiMi = false;
+                };
+                tiklandi = false;
+            };
+            if(oyunBaslatildiMi){
+                kareler.forEach(kare => {
+                    kare.hareketEttir();
+                });
+            };
+            kareler.forEach(kare => {
+                    kare.kareCiz();
+            });
+            requestAnimationFrame(ciz);
+        };
+        function oyunBaslat(){
+            if(!oyunBaslatildiMi){ // Oyun baslatilmadi ise baslat
+                oyunBaslatildiMi = true
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                kareleriOlustur();
+            };
+        };
+        
+    </script>
+</body>
+</html>
