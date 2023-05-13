@@ -5,6 +5,7 @@ Web Tabanlı Programlama Dersi kapsamında geliştirmiş olduğum bir oyun.
 - CSS
 - JavaScript
 # Nasıl Oynanır?
+Oyuna şu linten ulaşabilirsiniz: https://erenaltayy.github.io/JSTiklamaOyunu/
 Oyunu başlat butonuna bastığınızda çeşitli hızlarda, renklerde ve yönlerde hareket eden 10 tane kare oluşur. Hareket eden karelere tıklayabilirseniz skorunuz artar ve tıkladığınız kare silinir. Bu şekilde 10 kareye de başarılı bir şekilde tıklayabilirseniz oyunu bitirirsiniz. Tıkladığınız bölge bir kareye denk gelmiyorsa canınız azalır. 3 tane yanlış tıklama hakkınız var. Bütün canlarınız bittiğinizde oyun sonlanır.
 ## Ekran Görüntüleri
 ![capture_20230513224932838](https://github.com/erenaltayy/JSTiklamaOyunu/assets/85945886/68582dbb-b71f-4437-a314-867a3176374a)
