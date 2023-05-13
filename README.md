@@ -9,5 +9,5 @@ Oyunu başlat butonuna bastığınızda çeşitli hızlarda, renklerde ve yönle
 ## Ekran Görüntüleri
 ![capture_20230513224932838](https://github.com/erenaltayy/JSTiklamaOyunu/assets/85945886/68582dbb-b71f-4437-a314-867a3176374a)
 ![capture_20230513224952239](https://github.com/erenaltayy/JSTiklamaOyunu/assets/85945886/b68fe7f2-4b55-48d5-bad9-13a0b97346ea)
-![capture_20230513225025643](https://github.com/erenaltayy/JSTiklamaOyunu/assets/85945886/d005c4d5-5bd3-445d-9941-4e50b6d49608)
-![capture_20230513225242077](https://github.com/erenaltayy/JSTiklamaOyunu/assets/85945886/de023702-c230-4f7d-b2d5-5b40f1085dda)
+![capture_20230513225025643](https://github.com/erenaltayy/JSTiklamaOyunu/assets/85945886/81b76b6f-88e5-4cb9-bc20-e73793c96b36)
+![capture_20230513225242077](https://github.com/erenaltayy/JSTiklamaOyunu/assets/85945886/0f30f26e-3931-4566-916c-5ecd35772383)
